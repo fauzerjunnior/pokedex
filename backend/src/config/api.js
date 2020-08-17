@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL:
-    'https://raw.githubusercontent.com/BrunnerLivio/PokemonDataGraber/master/output.json',
+  baseURL: process.env.API_URL,
 });
 
 export default api;
