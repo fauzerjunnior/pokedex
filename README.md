@@ -33,3 +33,8 @@ $ yarn install && yarn start
 Feito isso o serviço de frontend estará funcionando na porta :3000 consultando as rotas que o serviço do backend disponibilizou pra gente. 
 
 [![Pokedex](https://i.imgur.com/ot1mFqr.png)]()
+
+### Vale lembrar
+
+O backend vai esperar encontrar uma base de MongoDB chamada de pokedex para trabalhar todas as manipulações internas da aplicação. :) 
+
