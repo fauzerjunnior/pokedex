@@ -42,6 +42,8 @@ const Login = () => {
         text: 'Houve uma falha no login, tente novamente.',
         icon: 'error',
       });
+
+      console.log(err);
     }
   }
 

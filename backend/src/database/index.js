@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import 'dotenv/config';
 
 class Database {
   constructor() {
@@ -6,7 +7,8 @@ class Database {
   }
 
   mongo() {
-    const env = process.env.MONGO_URL || 'mongodb://localhost:27017/pokedex';
+    const env = process.env.MONGO_URL;
+
     this.mongoConnection = mongoose.connect(env, {
       useNewUrlParser: true,
       useFindAndModify: true,

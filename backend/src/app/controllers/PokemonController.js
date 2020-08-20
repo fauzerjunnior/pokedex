@@ -44,6 +44,7 @@ class PokemonController {
     });
 
     const pokemonListAfterInsert = await Pokemon.find();
+
     return res.status(200).json(pokemonListAfterInsert);
   }
 

@@ -6,7 +6,7 @@ class UserController {
   async index(req, res) {
     const users = await User.find().sort({ createdAt: 'desc' });
 
-    return res.json(users);
+    return res.status(200).json(users);
   }
 
   async store(req, res) {

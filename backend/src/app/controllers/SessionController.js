@@ -24,10 +24,10 @@ class SessionController {
     }
 
     if (
-      !(await user.comparePassword(password, function (err) {
-        if (err) throw err;
-
-        return res.status(401).json({ error: 'Password does not match' });
+      !(await user.comparePassword(password, function (err, isMatch) {
+        if (err && !isMatch) {
+          return res.status(401).json({ error: 'Password does not match' });
+        }
       }))
     );
 

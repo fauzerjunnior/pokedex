@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom';
 import { FiPower, FiPlus } from 'react-icons/fi';
 
 import Logo from '../../components/Logo';
-import Input from '../../components/Input';
 
 import api from '../../services/api';
 
