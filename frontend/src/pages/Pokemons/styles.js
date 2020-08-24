@@ -27,6 +27,16 @@ export const Button = styled.button`
   transition: border-color 0.2s;
 `;
 
+export const ButtonNoBorder = styled.button`
+  height: auto;
+  width: auto;
+  border-radius: 4px;
+  border: none;
+  background: transparent;
+  margin-left: 16px;
+  transition: border-color 0.2s;
+`;
+
 export const Content = styled.div`
   margin-top: 20px;
 `;
@@ -68,4 +78,11 @@ export const HeaderContent = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+`;
+
+export const ActionContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  margin-top: 30px;
 `;

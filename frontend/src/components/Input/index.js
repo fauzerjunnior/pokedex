@@ -8,6 +8,7 @@ const Input = (props) => {
       placeholder={props.placeholder}
       type={props.type}
       onChange={props.onChange}
+      value={props.value}
     />
   );
 };

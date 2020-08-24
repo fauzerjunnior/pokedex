@@ -40,7 +40,7 @@ const AddNew = () => {
         (name !== '', generation !== '', attackQuantity !== '', types !== '')
       ) {
         console.log(data);
-        await api.post('/pokemons', data, {
+        await api.post('/pokemons/page=1', data, {
           headers: {
             Authorization: `Bearer ${userToken}`,
           },
@@ -52,7 +52,7 @@ const AddNew = () => {
           icon: 'success',
         });
 
-        history.push('/pokemons');
+        history.push('/pokemons/page=1');
       } else {
         swal({
           title: 'Ops!',
@@ -100,8 +100,8 @@ const AddNew = () => {
           }}
         />
 
-        <PrimaryButton title="Realizar cadastro" onClick />
-        <Link className="back-link" to="/pokemons">
+        <PrimaryButton title="Realizar cadastro" onClick={() => handleRegister} />
+        <Link className="back-link" to="/pokemons/page=1">
           <FiArrowLeft size={16} color="#3f3d55" />
           <LinkText>Voltar</LinkText>
         </Link>

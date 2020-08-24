@@ -10,6 +10,7 @@ import Register from './pages/Register';
 
 import Pokemons from './pages/Pokemons';
 import AddNew from './pages/AddNew';
+import Edit from './pages/Edit';
 
 const PublicRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -19,7 +20,7 @@ const PublicRoute = ({ component: Component, ...rest }) => (
         <Component {...props} />
       ) : (
         <Redirect
-          to={{ pathname: '/pokemons', state: { from: props.location } }}
+          to={{ pathname: '/pokemons/page=1', state: { from: props.location } }}
         />
       )
     }
@@ -48,8 +49,11 @@ const Routes = () => {
         <PublicRoute path="/login" exact component={Login} />
         <PublicRoute path="/register" exact component={Register} />
 
-        <PrivateRoute path="/pokemons" component={Pokemons} />
+        <PrivateRoute path="/pokemons/page=:page" component={Pokemons} />
         <PrivateRoute path="/add-new-pokemon" component={AddNew} />
+        <PrivateRoute path="/edit/:id" component={Edit} />
+
+        <Redirect to={{ pathname: '/pokemons/page=1'}} />
       </Switch>
     </BrowserRouter>
   );

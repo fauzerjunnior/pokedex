@@ -35,7 +35,7 @@ const Login = () => {
 
       localStorage.setItem('userToken', response.data.token);
 
-      history.push('/pokemons');
+      history.push('/pokemons/page=1');
     } catch (err) {
       swal({
         title: 'Ops!',
