@@ -23,5 +23,6 @@ module.exports = {
     'prettier/prettier': 'error',
     'func-names': 'off',
     'consistent-return': 'off',
+    'dot-notation': 'off',
   },
 };

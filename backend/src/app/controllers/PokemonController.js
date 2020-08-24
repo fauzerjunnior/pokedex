@@ -1,18 +1,25 @@
 import * as Yup from 'yup';
 
+import api from '../../config/api';
 import Pokemon from '../schemas/Pokemon';
 
 class PokemonController {
   async index(req, res) {
     const { page = 1 } = req.query;
+    let pokemons;
 
     if (req.params.id) {
       const pokemonById = await Pokemon.findById(req.params.id);
-
       return res.status(200).json(pokemonById);
     }
 
-    const pokemons = await Pokemon.find();
+    let response = await Pokemon.find();
+    if (!response.length > 0) {
+      response = await api.get();
+      pokemons = response.data;
+    } else {
+      pokemons = response;
+    }
 
     Object.keys(pokemons).forEach(async function (key) {
       const fastAttack = pokemons[key]['Fast Attack(s)'];
@@ -37,16 +44,12 @@ class PokemonController {
           return res.status(400).json({ error: 'Validation fails' });
         }
 
-        const pokemonList = await Pokemon.find();
-
-        if (!(pokemonList.length > 0)) {
-          await Pokemon.create({
-            name: pokemons[key].Name,
-            generation: pokemons[key].Generation,
-            types: pokemons[key].Types,
-            attackQuantity: fastAttack.length + specialAttack.length,
-          });
-        }
+        await Pokemon.create({
+          name: pokemons[key].Name,
+          generation: pokemons[key].Generation,
+          types: pokemons[key].Types,
+          attackQuantity: fastAttack.length + specialAttack.length,
+        });
       }
     });
 
