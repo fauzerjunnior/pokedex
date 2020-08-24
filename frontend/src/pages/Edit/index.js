@@ -57,7 +57,7 @@ const Edit = () => {
       name,
       generation,
       attackQuantity,
-      types: types.split(', '),
+      types: types,
     };
 
     try {
