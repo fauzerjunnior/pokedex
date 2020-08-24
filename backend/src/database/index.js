@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import 'dotenv/config';
+import '../bootstrap';
 
 class Database {
   constructor() {
@@ -7,13 +7,14 @@ class Database {
   }
 
   mongo() {
-    const env = process.env.MONGO_URL;
-
-    this.mongoConnection = mongoose.connect(env, {
-      useNewUrlParser: true,
-      useFindAndModify: true,
-      useUnifiedTopology: true,
-    });
+    this.mongoConnection = mongoose.connect(
+      `${process.env.DATABASE_URL}/${process.env.DATABASE_NAME}`,
+      {
+        useNewUrlParser: true,
+        useFindAndModify: true,
+        useUnifiedTopology: true,
+      }
+    );
   }
 }
 

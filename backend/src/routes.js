@@ -19,6 +19,7 @@ routes.put('/users/:id', UserController.update);
 routes.delete('/users/:id', UserController.delete);
 
 routes.get('/pokemons', PokemonController.index);
+routes.get('/pokemons/:id', PokemonController.index);
 routes.post('/pokemons', PokemonController.store);
 routes.put('/pokemons/:id', PokemonController.update);
 routes.delete('/pokemons/:id', PokemonController.delete);

@@ -1,4 +1,4 @@
-import 'dotenv/config';
+import '../bootstrap';
 
 export default {
   secret: process.env.APP_SECRET,

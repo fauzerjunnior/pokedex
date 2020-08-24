@@ -22,19 +22,19 @@ class UserController {
       return res.status(400).json({ error: 'Validation fails' });
     }
 
-    await User.create({
+    const { id } = await User.create({
       name,
       email,
       password,
     });
 
-    return res.status(200).json();
+    return res.status(200).json({ id });
   }
 
   async update(req, res) {
     const user = await User.findById(req.params.id);
 
-    const { name, email, password } = await user.update(req.body);
+    const { name, email, password } = await user.updateOne(req.body);
 
     return res.status(200).json(name, email, password);
   }

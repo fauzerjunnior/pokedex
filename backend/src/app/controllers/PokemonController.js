@@ -1,15 +1,22 @@
 import * as Yup from 'yup';
 
-import api from '../../config/api';
 import Pokemon from '../schemas/Pokemon';
 
 class PokemonController {
   async index(req, res) {
-    const pokemons = await api.get();
+    const { page = 1 } = req.query;
 
-    Object.keys(pokemons.data).forEach(async function (key) {
-      const fastAttack = pokemons.data[key]['Fast Attack(s)'];
-      const specialAttack = pokemons.data[key]['Special Attack(s)'];
+    if (req.params.id) {
+      const pokemonById = await Pokemon.findById(req.params.id);
+
+      return res.status(200).json(pokemonById);
+    }
+
+    const pokemons = await Pokemon.find();
+
+    Object.keys(pokemons).forEach(async function (key) {
+      const fastAttack = pokemons[key]['Fast Attack(s)'];
+      const specialAttack = pokemons[key]['Special Attack(s)'];
 
       if (fastAttack !== undefined && specialAttack !== undefined) {
         const schema = Yup.object().shape({
@@ -21,9 +28,9 @@ class PokemonController {
 
         if (
           !(await schema.isValid({
-            name: pokemons.data[key].Name,
-            generation: pokemons.data[key].Generation,
-            types: pokemons.data[key].Types,
+            name: pokemons[key].Name,
+            generation: pokemons[key].Generation,
+            types: pokemons[key].Types,
             attackQuantity: fastAttack.length + specialAttack.length,
           }))
         ) {
@@ -34,16 +41,18 @@ class PokemonController {
 
         if (!(pokemonList.length > 0)) {
           await Pokemon.create({
-            name: pokemons.data[key].Name,
-            generation: pokemons.data[key].Generation,
-            types: pokemons.data[key].Types,
+            name: pokemons[key].Name,
+            generation: pokemons[key].Generation,
+            types: pokemons[key].Types,
             attackQuantity: fastAttack.length + specialAttack.length,
           });
         }
       }
     });
 
-    const pokemonListAfterInsert = await Pokemon.find();
+    const pokemonListAfterInsert = await Pokemon.find()
+      .limit(9)
+      .skip((page - 1) * 9);
 
     return res.status(200).json(pokemonListAfterInsert);
   }
@@ -75,7 +84,7 @@ class PokemonController {
   async update(req, res) {
     const pokemon = await Pokemon.findById(req.params.id);
 
-    const { name, generation, types, attackQuantity } = await pokemon.update(
+    const { name, generation, types, attackQuantity } = await pokemon.updateOne(
       req.body
     );
 
@@ -83,7 +92,7 @@ class PokemonController {
   }
 
   async delete(req, res) {
-    await Pokemon.updateOne(req.params.id);
+    await Pokemon.findByIdAndRemove(req.params.id);
 
     return res.status(200).json();
   }
