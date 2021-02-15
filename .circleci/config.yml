@@ -1,7 +1,49 @@
 version: 2.1
-orbs:
-  node: circleci/node@3.0.0
-workflows:
-  node-tests:
-    jobs:
-      - node/test
+jobs:
+  build: 
+    docker:       
+      - image: circleci/node:8.9.4
+
+    working_directory: ~/pokedex        
+    steps:       
+      - checkout
+
+      - restore_cache:
+              keys: 
+                - v1-dependencies-{{ checksum "package.json" }}
+                - v1-dependencies-
+
+      - run: yarn install
+
+      - save_cache:
+              paths:
+                - node_modules
+              key: v1-dependencies-{{ checksum "package.json" }}
+workflows: 
+  version: 2.1
+  build-and-deploy-on-hold:
+    jobs: 
+      - build:
+          filters:
+            branches: 
+              only: 
+                - master
+                - development
+
+      - hold:
+          type: approval
+
+      - deploy-development: 
+          requires: 
+            - build
+          filters: 
+            branches: 
+              only: development
+
+      - deploy-prod:
+          requires:
+            - build
+            - hold
+          filters:
+            branches: 
+              only: master
